@@ -1,0 +1,50 @@
+<%- model_class = Task -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:start) %></th>
+      <th><%= model_class.human_attribute_name(:finish) %></th>
+      <th><%= model_class.human_attribute_name(:detail) %></th>
+      <!--      <th><%= model_class.human_attribute_name(:done) %></th> -->
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <% if task.done %>
+        <tr style="background-color: #6C6C6C;">
+      <% else %>
+        <tr>
+      <% end %>
+
+        <td><%= link_to task.id, group_task_path(task.group_id, task) %></td>
+        <td><%= task.name %></td>
+        <td><%= task.start %></td>
+        <td><%= task.finish %></td>
+        <td><%= task.detail %></td>
+        <!--        <td><%= task.done %></td> -->
+        <td><%=l task.created_at %></td>
+        <td><%= button_to '完了', change_done_group_task_path(task.group_id, task.id) %>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_group_task_path(task.group_id, task), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      group_task_path(task.group_id, task),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_group_task_path,
+            :class => 'btn btn-primary' %>
