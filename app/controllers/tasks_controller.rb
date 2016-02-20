@@ -28,7 +28,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     @task.group_id = params[:group_id]
-    @task.done = false
+    @task.done = 0 
 
     respond_to do |format|
       if @task.save
@@ -67,7 +67,7 @@ class TasksController < ApplicationController
 
   def change_done
     task = Task.find(params[:id])
-    task.done = !task.done
+    task.done = task.done + 1
     task.save
     redirect_to group_tasks_path 
   end
