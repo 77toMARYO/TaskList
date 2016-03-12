@@ -28,7 +28,7 @@
         <td><%= task.start %></td>
         <td><%= task.finish %></td>
         <td><%= task.detail %></td>
-        <td><%=l task.created_at %></td>
+        <td><%= task.created_at %></td>
         <td><%= task.done %></td>
         <td><%= button_to '完了', change_done_group_task_path(task.group_id, task.id) %>
         <td>
